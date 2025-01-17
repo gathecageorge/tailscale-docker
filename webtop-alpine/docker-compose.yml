@@ -1,0 +1,25 @@
+---
+services:
+  webtop:
+    image: linuxserver/webtop:latest
+    env_file:
+      - ../.env
+    hostname: webtop
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - http_proxy=http://127.0.0.1:1055
+      - https_proxy=http://127.0.0.1:1055
+      - all_proxy=socks5://127.0.0.1:1056
+    volumes:
+      - data:/config
+      - ./start.sh:/tailscale-start.sh
+    entrypoint: ["/bin/bash", "-c", "/tailscale-start.sh && /init"]
+    ports:
+      - 3000:3000
+    shm_size: "512m"
+    restart: unless-stopped
+
+volumes:
+  data: {}
