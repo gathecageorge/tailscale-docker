@@ -5,6 +5,9 @@ unset http_proxy
 unset https_proxy 
 unset all_proxy
 
+# setup ssl certs
+update-ca-certificates
+
 # Install firefox
 apk add firefox
 
