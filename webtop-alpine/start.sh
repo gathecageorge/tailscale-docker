@@ -5,6 +5,10 @@ unset http_proxy
 unset https_proxy 
 unset all_proxy
 
+# latest repo
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+
 # setup ssl certs
 update-ca-certificates
 
@@ -12,7 +16,7 @@ update-ca-certificates
 apk add firefox
 
 # Install tailscale
-curl -fsSL https://tailscale.com/install.sh | sh
+apk add tailscale
 tailscaled --state=mem: --tun=userspace-networking --socks5-server=localhost:1056 --outbound-http-proxy-listen=localhost:1055 &
 tailscale up --auth-key=$TAILSCALE_AUTH_KEY --hostname=$(hostname)
 
